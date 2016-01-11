@@ -23,6 +23,7 @@ var extend = require('utl/extend');
 return child(MiniStore, {
 
   defaults: {
+    ping: true,
     url: 'https://www.google.com/favicon.ico',
     interval: 10000,
     timeout: 5000
@@ -129,7 +130,9 @@ return child(MiniStore, {
    * @param {object} evt - Online event forwarded from `navigator.onLine`.
    */
   _onOnline: function (evt) {
-    this._startHeartbeat();
+    return this.settings.ping
+      ? this._startHeartbeat()
+      : this.set('status', 1);
   },
 
   /*
